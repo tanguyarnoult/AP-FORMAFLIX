@@ -23,12 +23,40 @@ class Formation extends Web
     // Affichage de la page d'accueil avec en fonction si connecté ou non une liste plus complète.
     function home()
     {
+
+        // Mise en variable de MAX(IDCOMPETENCE) FROM competence pour créer une boucle for
+        $max = $this->formationModel->getMaxIDCompetence();
+        $max = $max["MAXIDCOMP"];
+
+
+        // Mise en tableau de toutes les compétences
+        $competences = [];
+        for($i=1; $i<=$max; $i++) {
+            $libelle = $this->formationModel->getLibelleCompetenceByID($i);
+
+            if(isset($libelle)){
+                array_push($competences, $libelle["LIBELLECOMPETENCE"]);
+            }
+
+        }
+
+
+
         $formations = [];
         if (SessionHelpers::isLogin()) {
-            // Récupération des vidéo par le modèle
-            $formations = $this->formationModel->getVideos();
+            // Si une compétence à été sélectionnée par l'utilisateur
+            if(isset($_GET["competence"]) && $_GET["competence"] != 0) {
+                $formations = $this->formationModel->getVideosByCompetence($_GET["competence"]);
+            } else{
+                $formations = $this->formationModel->getVideos();
+            }
         } else {
-            $formations = $this->formationModel->getPublicVideos();
+            if(isset($_GET["competence"]) && $_GET["competence"] != 0){
+                $formations = $this->formationModel->getAllVideosByCompetence($_GET["competence"]);
+            } else {
+                $formations = $this->formationModel->getPublicVideos();
+            }
+
         }
 
         $this->header();

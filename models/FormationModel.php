@@ -11,15 +11,20 @@ class FormationModel extends SQL
         parent::__construct('formation', "IDFORMATION");
     }
 
+    // Ajout de la condition "DATEVISIBILITE < NOW" pour n'afficher que les vidéos avec une date de visibilité antérieure
+
     function getPublicVideos()
     {
-        $stmt = $this->pdo->query("SELECT * FROM formation where VISIBILITEPUBLIC = 1");
+        $stmt = $this->pdo->query("SELECT * FROM formation where VISIBILITEPUBLIC = 1 AND DATEVISIBILITE < NOW()");
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    // Modification de getVideos() pour pouvoir afficher uniquement les vidéos avec une date de visibilité antérieure
+
     function getVideos()
     {
-        return $this->getAll();
+        $stmt = $this->pdo->query("SELECT * FROM formation WHERE DATEVISIBILITE < NOW()");
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     function getByVideoId($videoId)
@@ -38,4 +43,34 @@ class FormationModel extends SQL
         $stmt->execute([$id]);
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+    function getMaxIDCompetence(){
+        $stmt = $this->pdo->prepare("SELECT MAX(IDCOMPETENCE) AS MAXIDCOMP FROM competence");
+        $stmt->execute();
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    function getLibelleCompetenceByID($id){
+        $stmt = $this->pdo->prepare("SELECT LIBELLECOMPETENCE FROM competence WHERE IDCOMPETENCE =?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+
+    // Recherche les vidéos liées à une compétence si l'utilisateur n'est pas connecté
+    function getAllVideosByCompetence($idCompetence)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM formation NATURAL JOIN developper WHERE DATEVISIBILITE < NOW() AND IDCOMPETENCE =? AND VISIBILITEPUBLIC = 1");
+        $stmt->execute([$idCompetence]);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    // Recherche les vidéos liées à une compétence
+    function getVideosByCompetence($idCompetence)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM formation NATURAL JOIN developper WHERE DATEVISIBILITE < NOW() AND IDCOMPETENCE =?");
+        $stmt->execute([$idCompetence]);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
 }

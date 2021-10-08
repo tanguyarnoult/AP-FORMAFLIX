@@ -14,7 +14,7 @@ $account = SessionHelpers::getConnected();
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo labore libero neque perferendis praesentium quae. Accusamus ad aperiam architecto cumque eligendi enim facilis illo, incidunt nemo quae quia quo voluptate?</p>
 
                 <div class="mt-5">
-                    <a class="btn btn-danger d-block full" href="./logout">Déconnexion</a>
+                    <a class="btn btn-danger d-block full" href="logout">Déconnexion</a>
                 </div>
             </div>
         </div>
