@@ -131,3 +131,9 @@ body{
 .fit-content {
     width: fit-content;
 }
+
+.sinscrire{
+    text-align: center;
+    color: white;
+    margin-top: -30px;
+}

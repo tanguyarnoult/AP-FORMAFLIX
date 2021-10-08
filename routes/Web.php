@@ -21,6 +21,7 @@ class Web
         Route::Add('/tv', [$formation, 'tv']);
         Route::Add('/about', [$main, 'about']);
         Route::Add('/login', [$account, 'login']);
+        Route::Add('/register', [$account, 'register']);
 
         if (SessionHelpers::isLogin()) {
             Route::Add('/me', [$account, 'me']);

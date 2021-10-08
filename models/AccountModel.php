@@ -27,9 +27,8 @@ class AccountModel extends SQL
         }
     }
 
-    public function register(){
-        // -> À faire, récupération des paramètres & création du mot de passe
-        // -> Ajouter en base de données l'utilisateur.
-        // password_hash($password, PASSWORD_BCRYPT, ['cost' => 12])
+    public function register($nom, $prenom, $login, $password){
+        $stmt = $this->pdo->prepare("INSERT INTO inscrit VALUES (NULL, ?, ?, ?, ?)");
+        $stmt->execute([$nom, $prenom, $login, $password]);
     }
 }

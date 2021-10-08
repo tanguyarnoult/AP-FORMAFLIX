@@ -26,8 +26,10 @@
 
                                 <button class="w-100 mt-5 btn btn-lg btn-primary" type="submit">Connexion</button>
                             </form>
+
                         </main>
                     </div>
+                    <p class="sinscrire"> Vous n'avez pas encore de compte ? <a href="./register"> Inscrivez vous </a> </p>
                 </div>
             </div>
         </div>
