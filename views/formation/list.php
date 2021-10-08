@@ -13,7 +13,7 @@
 
 
                 for($i=1; $i<sizeof($competences); $i++){
-                    if(isset($_GET["competence"]) && $_GET["competence"] == $i){
+                    if(isset($_GET["competence"]) && $_GET["competence"] == $competences[$i]["IDCOMPETENCE"]){
                         // On ajoute selected au option si la compétence à été choisie par l'utilisateur
                         echo '<option value="'.$competences[$i]["IDCOMPETENCE"].'" selected> '.$competences[$i]["LIBELLECOMPETENCE"].'</option>';
                     } else {

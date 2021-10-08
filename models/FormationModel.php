@@ -74,7 +74,7 @@ class FormationModel extends SQL
     }
 
     function getCommentaireByFormationID($id){
-        $stmt = $this->pdo->prepare("SELECT * FROM commentaire NATURAL JOIN inscrit WHERE IDFORMATION =?");
+        $stmt = $this->pdo->prepare("SELECT * FROM commentaire NATURAL JOIN inscrit WHERE IDFORMATION =? AND VALIDATION=1");
         $stmt->execute([$id]);
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
@@ -83,6 +83,22 @@ class FormationModel extends SQL
         $stmt = $this->pdo->prepare("SELECT * FROM formation WHERE IDENTIFIANTVIDEO =?");
         $stmt->execute([$id]);
         return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    // Récupère l'ID d'un inscrit par son email
+    function getIDUserByEmail($email){
+        $stmt = $this->pdo->prepare("SELECT IDINSCRIT FROM inscrit WHERE EMAILINSCRIT =?");
+        $stmt->execute([$email]);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    // Ajoute un commentaire
+    function addCommentaire($libelle, $email, $formation){
+        $id = $this->getIDUserByEmail($email);
+        $id = $id["IDINSCRIT"];
+
+        $stmt = $this->pdo->prepare("INSERT INTO commentaire VALUES(?,?,?, NOW(), 0)");
+        $stmt->execute([$id, $formation, $libelle]);
     }
 
 

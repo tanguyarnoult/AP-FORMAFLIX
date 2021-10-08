@@ -83,6 +83,16 @@ class Formation extends Web
             $this->redirect("./formations");
         }
 
+        // Verifie que l'utilisateur est connecté pour afficher le formulaire commentaire
+        if(SessionHelpers::isLogin()){
+            $estConnecte = true;
+            $username = $_SESSION['USER']['username'];
+            $email = $_SESSION['USER']['email'];
+
+        } else {
+            $estConnecte = false;
+        }
+
         // Compétence associées à la vidéo
         $competences = $this->formationModel->competencesFormation($video["IDFORMATION"]);
 
@@ -93,6 +103,14 @@ class Formation extends Web
         // Récupération des commentaires en fonction de la vidéo
         $commentaires = $this->formationModel->getCommentaireByFormationID($idFormation["IDFORMATION"]);
 
+        // Ajout du commentaire dans la bdd
+
+        if(isset($_POST["libelleCommentaireForm"])){
+            $libelle = htmlspecialchars($_POST["libelleCommentaireForm"]);
+            $id = $idFormation["IDFORMATION"];
+
+            $this->formationModel->addCommentaire($libelle, $email, $id);
+        }
 
         $this->header();
         include("./views/formation/tv.php");

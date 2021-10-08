@@ -186,11 +186,45 @@ body{
 
 
 .libelleCommentaire{
-    vertical-align: center;
     margin-left: 15px;
     margin-top: 3%;
     margin-bottom: 3%;
     text-align: justify;
     text-justify: inter-word;
     margin-right: 3%;
+    width: 70%;
+}
+
+.commentaireForm{
+    width: 50%;
+    background-color: rgb(61,61,61);
+    border-radius: 10px;
+
+    margin-top: 2%;
+
+
+}
+.libelleCommentaireForm{
+    padding: 10px;
+    width: 80%;
+    line-height: 50px;
+}
+
+.boutonCommentaire{
+    margin-bottom: 15px;
+    font-family: 'Open Sans', sans-serif;
+    display: inline-block;
+    background-color: rgb(61,61,61);
+    border-color: white;
+    color: #eeeeee;
+    text-align: center;
+    font-size: 18px;
+    padding: 5px;
+    width: 305px;
+    margin-right: -60%;
+    margin-top: 2%;
+}
+
+.commentaireTitle{
+    padding-top: 2%;
 }

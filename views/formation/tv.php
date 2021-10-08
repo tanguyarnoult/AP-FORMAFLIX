@@ -29,9 +29,31 @@
             ?>
 
         </div>
+
 </div>
+
+<center>
+<?php
+// Verifie que l'utilisateur est connecté
+if ($estConnecte){
+    ?>
+
+
+
+            <?php echo '<form method="POST" class="commentaireForm" action="./tv?id='.$video['IDENTIFIANTVIDEO'].'">'; ?>
+            <h1 class="h3 mb-3 fw-normal text-light commentaireTitle">Ajouter un commentaire</h1>
+                <div class="form-floating mt">
+                    <input name="libelleCommentaireForm" class="libelleCommentaireForm" id="floatingPassword" placeholder="Votre commentaire" required>
+                </div>
+                <button class="boutonCommentaire" type="submit">Envoyez votre commentaire</button>
+            </form>
+
+<?php
+}
+?>
+
         <!-- Affichage des commentaires -->
-    <center>
+
             <table class="commentaire">
                 <?php
                     foreach ($commentaires as $commentaire){
