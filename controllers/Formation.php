@@ -42,8 +42,6 @@ class Formation extends Web
 
         }
 
-
-
         $formations = [];
         if (SessionHelpers::isLogin()) {
             // Si une compétence à été sélectionnée par l'utilisateur
@@ -70,8 +68,10 @@ class Formation extends Web
      * $id est automatiquement rempli via la valeur du GET
      * @param $id
      */
+
     function tv($id)
     {
+
         // Récupération de la vidéo par rapport à l'ID demandé
         $video = $this->formationModel->getByVideoId($id);
         if (!$video) {
@@ -83,8 +83,16 @@ class Formation extends Web
             $this->redirect("./formations");
         }
 
-        // Compétence assocés à la vidéo
+        // Compétence associées à la vidéo
         $competences = $this->formationModel->competencesFormation($video["IDFORMATION"]);
+
+        // Chargement des commentaires
+        // Récupération de l'ID de la formation
+        $idFormation = $this->formationModel->getFormationByVideoID($id);
+
+        // Récupération des commentaires en fonction de la vidéo
+        $commentaires = $this->formationModel->getCommentaireByFormationID($idFormation["IDFORMATION"]);
+
 
         $this->header();
         include("./views/formation/tv.php");

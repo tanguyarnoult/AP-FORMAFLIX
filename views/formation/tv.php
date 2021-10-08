@@ -7,7 +7,6 @@
             <?= $video['LIBELLE'] ?>
         </div>
     </div>
-    <div class="w-100">
 
         <div class="card card-dark mt-5 p-3">
             <div class="text-light"><?= $video['DESCRIPTION'] ?></div>
@@ -28,8 +27,24 @@
                 <?php
             }
             ?>
+
         </div>
-    </div>
+</div>
+        <!-- Affichage des commentaires -->
+    <center>
+            <table class="commentaire">
+                <?php
+                    foreach ($commentaires as $commentaire){
+                        echo '<tr class="ligneCommentaire">
+                                <td class="colonnePseudoCommentaire"><p class="pseudoCommentaire">'.$commentaire["PRENOMINSCRIT"]." ".$commentaire["NOMINSCRIT"].'</p> 
+                                <p class="dateCommentaire">'.$commentaire["DATE"].'</p>
+                                </td>
+                                <td class="colonneCommentaire"><p class="libelleCommentaire">'.$commentaire["LIBELLE"].'</p></td>
+                              </tr>';
+                    }
+                ?>
+            </table>
+    </center>
 </div>
 
 

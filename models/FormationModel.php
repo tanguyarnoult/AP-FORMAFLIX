@@ -73,5 +73,17 @@ class FormationModel extends SQL
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    function getCommentaireByFormationID($id){
+        $stmt = $this->pdo->prepare("SELECT * FROM commentaire NATURAL JOIN inscrit WHERE IDFORMATION =?");
+        $stmt->execute([$id]);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    function getFormationByVideoID($id){
+        $stmt = $this->pdo->prepare("SELECT * FROM formation WHERE IDENTIFIANTVIDEO =?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
 
 }
