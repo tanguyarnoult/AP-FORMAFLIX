@@ -11,12 +11,13 @@
 
                 // Création des options pour le select avec une boucle FOR (plutot que foreach) car on utilise le $i comme value
 
+
                 for($i=1; $i<sizeof($competences); $i++){
                     if(isset($_GET["competence"]) && $_GET["competence"] == $i){
                         // On ajoute selected au option si la compétence à été choisie par l'utilisateur
-                        echo '<option value="'.$i.'" selected> '.$competences[$i].'</option>';
+                        echo '<option value="'.$competences[$i]["IDCOMPETENCE"].'" selected> '.$competences[$i]["LIBELLECOMPETENCE"].'</option>';
                     } else {
-                        echo '<option value="'.$i.'"> '.$competences[$i].'</option>';
+                        echo '<option value="'.$competences[$i]["IDCOMPETENCE"].'"> '.$competences[$i]["LIBELLECOMPETENCE"].'</option>';
                     }
                 }
 

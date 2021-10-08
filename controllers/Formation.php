@@ -31,11 +31,13 @@ class Formation extends Web
 
         // Mise en tableau de toutes les compétences
         $competences = [];
-        for($i=1; $i<=$max; $i++) {
-            $libelle = $this->formationModel->getLibelleCompetenceByID($i);
 
-            if(isset($libelle)){
-                array_push($competences, $libelle["LIBELLECOMPETENCE"]);
+
+        for($i=1; $i<=$max; $i++) {
+            $competence = $this->formationModel->getCompetenceByID($i);
+
+            if(isset($competence)){
+                array_push($competences, $competence);
             }
 
         }

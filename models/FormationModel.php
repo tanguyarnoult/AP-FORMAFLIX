@@ -50,8 +50,8 @@ class FormationModel extends SQL
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
-    function getLibelleCompetenceByID($id){
-        $stmt = $this->pdo->prepare("SELECT LIBELLECOMPETENCE FROM competence WHERE IDCOMPETENCE =?");
+    function getCompetenceByID($id){
+        $stmt = $this->pdo->prepare("SELECT * FROM competence WHERE IDCOMPETENCE =?");
         $stmt->execute([$id]);
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
@@ -72,5 +72,6 @@ class FormationModel extends SQL
         $stmt->execute([$idCompetence]);
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
+
 
 }

@@ -38,6 +38,16 @@
                                     <label for="floatingPassword">Retapez votre mot de passe</label>
                                 </div>
 
+                                <p class="labelDiplome">Quel est votre dernier diplome obtenu ?</p>
+                                    <select class="selectDiplome" name="diplome">
+                                        <?php
+                                            foreach ($diplomes as $diplome){
+                                                echo '<option value="'.$diplome["IDDIPLOME"].'">'.$diplome["LIBELLE"].'</option>';
+                                            }
+                                        ?>
+                                    </select>
+
+
                                 <button class="w-100 mt-5 btn btn-lg btn-primary" type="submit">S'inscrire</button>
                             </form>
 

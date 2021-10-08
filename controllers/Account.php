@@ -56,15 +56,29 @@ class Account extends Web
     function register(){
         // Verifie les données entrées par l'utilisateur
 
-        if(isset($_POST["nom"]) && isset($_POST["prenom"]) && isset($_POST["login"]) && isset($_POST["password"]) && isset($_POST["password2"]) && $_POST["password"] == $_POST["password2"]){
+        if(isset($_POST["diplome"]) && isset($_POST["nom"]) && isset($_POST["prenom"]) && isset($_POST["login"]) && isset($_POST["password"]) && isset($_POST["password2"]) && $_POST["password"] == $_POST["password2"]){
             $nom = htmlspecialchars($_POST["nom"]);
             $prenom = htmlspecialchars($_POST["prenom"]);
             $login = htmlspecialchars($_POST["login"]);
             $password = password_hash($_POST["password"], PASSWORD_BCRYPT, ['cost' => 12]);
+            $diplome = htmlspecialchars($_POST["diplome"]);
 
-            $this->accountModel->register($nom, $prenom, $login, $password);
+            $this->accountModel->register($nom, $prenom, $login, $password, $diplome);
 
             $this->login();
+        }
+
+        // On récupère l'ID Max des diplomes pour ensuite faire une boucle pour
+        $maxIDDiplome = $this->accountModel->getMaxIDDiplome();
+        $maxIDDiplome = $maxIDDiplome["MAX"];
+
+        $diplomes = [];
+        for($i=1; $i<=$maxIDDiplome; $i++) {
+            $diplome = $this->accountModel->getByDiplomeID($i);
+
+            if(isset($diplome)){
+                array_push($diplomes, $diplome);
+            }
         }
 
         $this->header();

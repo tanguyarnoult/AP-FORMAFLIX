@@ -27,8 +27,20 @@ class AccountModel extends SQL
         }
     }
 
-    public function register($nom, $prenom, $login, $password){
-        $stmt = $this->pdo->prepare("INSERT INTO inscrit VALUES (NULL, ?, ?, ?, ?)");
-        $stmt->execute([$nom, $prenom, $login, $password]);
+    public function register($nom, $prenom, $login, $password, $diplome){
+        $stmt = $this->pdo->prepare("INSERT INTO inscrit VALUES (NULL, ?, ?, ?, ?, ?)");
+        $stmt->execute([$nom, $prenom, $login, $password, $diplome]);
+    }
+
+    function getMaxIDDiplome(){
+        $stmt = $this->pdo->prepare("SELECT MAX(IDDIPLOME) as MAX FROM diplome");
+        $stmt->execute();
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    function getByDiplomeID($id){
+        $stmt = $this->pdo->prepare("SELECT * FROM diplome WHERE IDDIPLOME =?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 }
