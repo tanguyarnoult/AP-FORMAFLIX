@@ -32,13 +32,43 @@
 
 </div>
 
-<center>
+<!-- Affichage du bouton: formation completée -->
+
+
 <?php
+
 // Verifie que l'utilisateur est connecté
 if ($estConnecte){
     ?>
+    <!-- Affichage du formulaire de validation de formation -->
+
+    <div class="validationFormation">
+        <?php echo '<form method="POST" class="formCompleterFormation" action="./tv?id='.$video['IDENTIFIANTVIDEO'].'">'; ?>
+        <div class="textValidationFormation">
+        <label for="validation">J'ai suivi cette formation</label>
 
 
+        <?php
+
+        if($estCertifie == true || (isset($_POST["validation"]) && $_POST["validation"] == "valide")){
+            echo'<input type="checkbox" id="validation" checked name="validation" value="valide" onclick="./tv?id='.$video['IDENTIFIANTVIDEO'].'">';
+        } else {
+            echo '<input type="checkbox" id="validation" name="validation" value="valide" onclick="./tv?id='.$video['IDENTIFIANTVIDEO'].'">';
+        }
+        ?>
+
+        <br>
+        <label for="verification">Vous êtes sur ?</label>
+        <input type="checkbox" id="verification" name="verification">
+        </div>
+
+        <br>
+        <input class="boutonValidationFormation" type="submit" value="Valider">
+        </form>
+    </div>
+
+<center>
+    <!-- Affichage du formulaire d'entrée d'un commentaire -->
 
             <?php echo '<form method="POST" class="commentaireForm" action="./tv?id='.$video['IDENTIFIANTVIDEO'].'">'; ?>
             <h1 class="h3 mb-3 fw-normal text-light commentaireTitle">Ajouter un commentaire</h1>
@@ -48,11 +78,14 @@ if ($estConnecte){
                 <button class="boutonCommentaire" type="submit">Envoyez votre commentaire</button>
             </form>
 
+
+
 <?php
 }
 ?>
-
         <!-- Affichage des commentaires -->
+
+
 
             <table class="commentaire">
                 <?php

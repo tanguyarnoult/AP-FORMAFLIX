@@ -38,9 +38,16 @@ class AccountModel extends SQL
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
-    function getByDiplomeID($id){
+    function getByDiplomeID($id)
+    {
         $stmt = $this->pdo->prepare("SELECT * FROM diplome WHERE IDDIPLOME =?");
         $stmt->execute([$id]);
         return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    function getCertificationByUserEmail($id){
+        $stmt = $this->pdo->prepare("SELECT LIBELLE, DIFFICULTE FROM certification NATURAL JOIN certifie NATURAL JOIN inscrit WHERE EMAILINSCRIT = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 }

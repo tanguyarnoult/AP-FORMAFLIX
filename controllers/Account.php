@@ -45,6 +45,8 @@ class Account extends Web
     // Affiche l'utilisateur actuellement connecté.
     function me()
     {
+        $certifications = $this->accountModel->getCertificationByUserEmail($_SESSION['USER']['email']);
+
         $this->header();
         include("views/account/me.php");
         $this->footer();

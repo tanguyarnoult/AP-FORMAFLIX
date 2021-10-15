@@ -101,5 +101,37 @@ class FormationModel extends SQL
         $stmt->execute([$id, $formation, $libelle]);
     }
 
+    // Savoir si un utilisateur possède la certification sur une formation
+
+    // On récupère la ceritication de la formation
+
+    function getCertificationByFormationID($idFormation){
+        $stmt = $this->pdo->prepare("SELECT IDCERTIFICATION FROM formation WHERE IDFORMATION = ?");
+        $stmt->execute([$idFormation]);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    function estCertifie($idCertification, $idUtilisateur)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM certifie WHERE IDCERTIFICATION = ? AND IDINSCRIT = ?");
+        $stmt->execute([$idCertification, $idUtilisateur]);
+        $reponse = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        if (isset($reponse["IDINSCRIT"])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function supprimerCertifie($idCertification, $idUtilisateur){
+        $stmt = $this->pdo->prepare("DELETE FROM certifie WHERE IDCERTIFICATION = ? AND IDINSCRIT = ?");
+        $stmt->execute([$idCertification, $idUtilisateur]);
+    }
+
+    function ajouterCertifie($idCertification, $idUtilisateur){
+        $stmt = $this->pdo->prepare("INSERT INTO certifie VALUES(?,?)");
+        $stmt->execute([$idUtilisateur, $idCertification]);
+    }
 
 }

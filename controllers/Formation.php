@@ -78,6 +78,8 @@ class Formation extends Web
             $this->redirect("./formations");
         }
 
+
+
         // Les vidéos non public ne doivent pas être visible si non connecté
         if($video['VISIBILITEPUBLIC'] == 0 && !SessionHelpers::isLogin()){
             $this->redirect("./formations");
@@ -88,7 +90,6 @@ class Formation extends Web
             $estConnecte = true;
             $username = $_SESSION['USER']['username'];
             $email = $_SESSION['USER']['email'];
-
         } else {
             $estConnecte = false;
         }
@@ -111,6 +112,26 @@ class Formation extends Web
 
             $this->formationModel->addCommentaire($libelle, $email, $id);
         }
+
+        // On réucpère l'id de la certicication
+        $idCerification = $this->formationModel->getCertificationByFormationID($video["IDFORMATION"]);
+
+        // On verifie si l'utilisateur est certifié
+        $idUtilisateur = $this->formationModel->getIDUserByEmail($email);
+        $idUtilisateur = $idUtilisateur["IDINSCRIT"];
+
+
+        $estCertifie = false;
+        if ($this->formationModel->estCertifie($idCerification["IDCERTIFICATION"], $idUtilisateur)){
+            $estCertifie = true;
+
+            if (!isset($_POST["validation"]) && isset($_POST["verification"])){
+                $this->formationModel->supprimerCertifie($idCerification["IDCERTIFICATION"], $idUtilisateur);
+            }
+        } elseif (!isset($_POST["validation"]) && isset($_POST["verification"])){
+            $this->formationModel->ajouterCertifie($idCerification["IDCERTIFICATION"], $idUtilisateur);
+        }
+
 
         $this->header();
         include("./views/formation/tv.php");
